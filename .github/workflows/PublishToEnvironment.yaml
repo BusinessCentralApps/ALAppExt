@@ -1,4 +1,4 @@
-name: Publish To Environment
+﻿name: Publish To Environment
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ defaults:
 
 jobs:
   Initialization:
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     outputs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
@@ -35,7 +35,7 @@ jobs:
           eventId: "DO0097"
 
   Analyze:
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     needs: [ Initialization ]
     outputs:
       settings: ${{ steps.ReadSettings.outputs.SettingsJson }}
@@ -133,7 +133,7 @@ jobs:
 
   PostProcess:
     if: always()
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     needs: [ Initialization, Analyze, Deploy ]
     steps:
       - name: Checkout
@@ -145,4 +145,3 @@ jobs:
         with:
           eventId: "DO0097"
           telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-

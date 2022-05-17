@@ -1,4 +1,4 @@
-name: Create a new app
+﻿name: Create a new app
 
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ defaults:
 
 jobs:
   Initialization:
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     outputs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
@@ -45,7 +45,7 @@ jobs:
           eventId: "DO0092"
 
   CreateApp:
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     needs: [ Initialization ]
     steps:
       - name: Checkout
@@ -70,7 +70,7 @@ jobs:
 
   PostProcess:
     if: always()
-    runs-on: [ windows-latest ]
+    runs-on: [ self-hosted ]
     needs: [ Initialization, CreateApp ]
     steps:
       - name: Checkout
